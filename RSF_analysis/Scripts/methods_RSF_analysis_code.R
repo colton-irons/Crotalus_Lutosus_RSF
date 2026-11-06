@@ -11,14 +11,14 @@ p_load(dplyr, tidyterra, lubridate, terra, sf, cowplot,
 snake_usedpts <- st_read("/Users/coltonirons/Desktop/GRBA rattlesnake proj/thin data/snakeusedpts.utm.sf.gpkg")
 
 #maybe include in GitHub?
-snake_usedptsDATE <- st_read("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/thin data/thinned_snakeptsNO2009.shp")
+snake_usedptsDATE <- st_read("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/Polygons_Points/snake_usedptsDATE.shp")
 
 ### reading in all the data points combining background and used locations 
-combined_data25693pts <- read_csv("~/Desktop/GRBA rattlesnake Proj/testing_trainingData/25707PApts/combined_data.csv")
+combined_data25693pts <- read_csv("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/usedVSavailablepts_variables.csv")
 
-raster_stack <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/scripts/RSF_analysis/bake_mastercovarFINALFINAL.tif")
+raster_stack <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/SA_mastercovarRastLyr.tif")
 
-study_area <- vect("~/Desktop/GRBA rattlesnake Proj/Rattlesnake scripts /bakeSA_740m.shp")
+study_area <- vect("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/Polygons_Points/SA_740mbuffer.shp")
 
 
 # check data --------------
