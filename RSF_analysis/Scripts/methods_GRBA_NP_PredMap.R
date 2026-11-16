@@ -10,7 +10,7 @@ grba_nps.v <- vect("/Users/coltonirons/Desktop/GRBA rattlesnake proj/grbanps.shp
 
 #read in DEM
 master_DEM<- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/GRBA_Rasters/DEM_GRBANP.tif")
-grba_aspect.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/GRBA_Rasters/aspectgrba_DEM.tif")
+grba_aspect.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/aspectgrbanp_DEM.tif")
 
 ## read in ruggedness layer provided by Tom Dilts
 rugged_grbanp.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/vrml_mosaic.tif")
@@ -36,18 +36,19 @@ grbanp_veg <- easternNV.veg.rast |>
 
 terra::plot(grbanp_veg)
 
-# Calculate northwest-facing aspect ----------------------
-
-northwest_aspect <- cos(
+# Calculate northeast-facing aspect ----------------------
+northeast_aspect <- cos(
   grba_aspect.rast[["aspect"]] * pi / 180 -
-    7 * pi / 4
+    pi / 4
 )
 
-names(northwest_aspect) <- "NW_aspect"
+# Rename raster layer
+names(northeast_aspect) <- "NE_aspect"
 
+# Plot northeast aspect
 terra::plot(
-  northwest_aspect,
-  main = "Northwest-facing aspect"
+  northeast_aspect,
+  main = "Northeast-facing aspect"
 )
 
 # Align terrain and northwest aspect to the park vegetation grid -------------
@@ -63,22 +64,22 @@ terrain_grbanp <- terra::mask(
   grbanp_veg
 )
 
-northwest_aspect_grbanp <- terra::project(
-  northwest_aspect,
+northeast_aspect_grbanp <- terra::project(
+  northeast_aspect,
   terrain_grbanp[["elevation"]],
   method = "bilinear"
 )
 
 
-northwest_aspect_grbanp <- terra::mask(
-  northwest_aspect_grbanp,
+northeast_aspect_grbanp <- terra::mask(
+  northeast_aspect_grbanp,
   terrain_grbanp[["elevation"]]
 )
 
 # Combine aligned predictors
 raster_stack_grbanp <- c(
   terrain_grbanp,
-  northwest_aspect_grbanp,
+  northeast_aspect_grbanp,
   grbanp_veg
 )
 
