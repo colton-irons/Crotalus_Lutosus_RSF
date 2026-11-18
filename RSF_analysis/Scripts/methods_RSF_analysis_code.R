@@ -692,7 +692,7 @@ terra::global(
   na.rm = TRUE
 )
 
-# Prepare data for plotting ---------------
+# Prepare data for mapping ---------------
 
 prediction_df <- terra::as.data.frame(
   prediction_raster_centered,

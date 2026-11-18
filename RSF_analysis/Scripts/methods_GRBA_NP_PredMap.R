@@ -23,7 +23,7 @@ hiber_grbanp.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rast
 
 
 # Crop and mask vegetation to the park boundary ----------------------
-easternNV.veg.rast <- rast("/Users/coltonirons/Desktop/Veg/easternNV_veg.tif")
+easternNV.veg.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/EasternNV_VegRastLyr/easternNV_veg.tif")
 
 grba_nps_veg_crs <- terra::project(
   grba_nps.v,
