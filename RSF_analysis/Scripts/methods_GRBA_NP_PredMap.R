@@ -5,40 +5,51 @@ p_load(dplyr, readxl, tidyterra, lubridate, terra, sf,
 
 
 ## read in GRBA national park polygon as vector
-grba_nps.v <- vect("/Users/coltonirons/Desktop/GRBA rattlesnake proj/grbanps.shp")
-
+grba_nps.v <- vect("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/Polygons_points/grbanps.shp")
 
 #read in DEM
-master_DEM<- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/GRBA_Rasters/DEM_GRBANP.tif")
-grba_aspect.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/aspectgrbanp_DEM.tif")
+master_DEM<- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/GRBA_NP_DEMRastLyrs/grbanp_dem.tif")
+plot(master_DEM)
 
 ## read in ruggedness layer provided by Tom Dilts
-rugged_grbanp.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/vrml_mosaic.tif")
+rugged_grbanp.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/vrml_mosaic.tif")
+summary(rugged_grbanp.rast)
+
+### read in AFG, BGR, TRE, SHR, LTR, and PFG
+grbanp_veg <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_VegRastLyr/grbanp_veg.tif")
 
 
 ### read in distance to water, roads, and hibernacula 
-road_grbanp.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/GRBA_Rasters/grbanp_road.tif")
-water_grbanp.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/GRBA_Rasters/grbanp_stream.tif")
-hiber_grbanp.rast <- rast("/Users/coltonirons/Desktop/GRBA rattlesnake Proj/rasters/GRBA_Rasters/grbanp_den.tif")
-
+road_grbanp.rast <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_DistRastLyrs/grbanp_road.tif")
+plot(road_grbanp.rast)
+water_grbanp.rast <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_DistRastLyrs/grbanp_stream.tif")
+plot(water_grbanp.rast)
+hiber_grbanp.rast <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_DistRastLyrs/grbanp_den.tif")
+plot(hiber_grbanp.rast)
 
 # Crop and mask vegetation to the park boundary ----------------------
-easternNV.veg.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/EasternNV_VegRastLyr/easternNV_veg.tif")
 
-grba_nps_veg_crs <- terra::project(
+grba_nps_rug_crs <- terra::project(
   grba_nps.v,
-  terra::crs(easternNV.veg.rast)
+  terra::crs(rugged_grbanp.rast)
 )
 
-grbanp_veg <- easternNV.veg.rast |>
-  terra::crop(grba_nps_veg_crs) |>
-  terra::mask(grba_nps_veg_crs)
+grbanp_rug <- rugged_grbanp.rast |>
+  terra::crop(grba_nps_rug_crs) |>
+  terra::mask(grba_nps_rug_crs)
 
-terra::plot(grbanp_veg)
+terra::plot(grbanp_dem)
+
+# Save cropped and masked vegetation raster as a GeoTIFF
+terra::writeRaster(
+  master.dem,
+  "grbanp_dem.tif",
+  overwrite = TRUE
+)
 
 # Calculate northeast-facing aspect ----------------------
 northeast_aspect <- cos(
-  grba_aspect.rast[["aspect"]] * pi / 180 -
+  master_DEM[["aspect"]] * pi / 180 -
     pi / 4
 )
 
@@ -202,7 +213,7 @@ plot(grbalst)
 
 
 # Prepare rock-cover and LST predictors for park-wide prediction --------------
-grbarock.rast <- rast("/Users/coltonirons/Desktop/TempRock_raster/rocklayer/BlockStRock.tif")
+grbarock.rast <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_RockRastLyr/grbanp_BlockStRock.tif")
 plot(grbarock.rast)
 
 names(grbarock.rast)[1] <- "rock.r"

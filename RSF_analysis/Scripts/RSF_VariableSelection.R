@@ -11,9 +11,10 @@ install.packages("~/Desktop/rflab/rfUtilities_2.1-5.tar.gz")
 ALL25693pts <- read.csv("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/usedVSavailablepts_variables.csv")
 
 
-ALL25693pts.test <- ALL25693pts %>% 
-  dplyr::select( -PIT4, -YEAR, -Easting, -Northing)
+raster_stackFINAL <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/SA_mastercovarRastLyr.tif")
 
+ALL25693pts.test <- ALL25693pts %>% 
+  dplyr::select(  -PIT4, -YEAR, -Easting, -Northing)
 
 
 b=1000
