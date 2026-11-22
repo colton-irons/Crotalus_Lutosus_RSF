@@ -11,12 +11,6 @@ grba_nps.v <- vect("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/
 master_DEM<- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/GRBA_NP_DEMRastLyrs/grbanp_dem.tif")
 plot(master_DEM)
 
-## read in ruggedness layer provided by Tom Dilts
-rugged_grbanp.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/vrml_mosaic.tif")
-plot(rugged_grbanp.rast)
-
-
-
 ### read in AFG, BGR, TRE, SHR, LTR, and PFG
 grbanp_veg <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/GRBA_NP_VegRastLyrs/grbanp_veg.tif")
 
@@ -76,6 +70,7 @@ raster_stack_grbanp <- c(
 terra::plot(raster_stack_grbanp)
 
 elevation_template <- raster_stack_grbanp[["elevation"]]
+plot(elevation_template)
 
 # Align distance rasters to the park-wide template ---------------------------
 
@@ -102,23 +97,6 @@ terra::compareGeom(
   GRBA_dist2lyr.r,
   stopOnError = FALSE
 )
-
-# Align ruggedness to the park-wide template ---------------------------------
-
-ruggedness_grbanp <- rugged_grbanp.rast |>
-  terra::project(
-    elevation_template,
-    method = "cubicspline"
-  ) |>
-  terra::mask(elevation_template)
-
-names(ruggedness_grbanp) <- "ruggedness"
-
-terra::plot(
-  ruggedness_grbanp,
-  main = "Terrain ruggedness"
-)
-
 
 
 # Calculate mean active-season land-surface temperature ----------------------
@@ -209,7 +187,7 @@ plot(GRBArocktemp.r)
 
 
 # Combine all raster layers into a single SpatRaster --------------
-raster_stack_grbanp_final <- c(raster_stack_grbanp, GRBA_dist2lyr.r, ruggedness_grbanp,GRBArocktemp.r)
+raster_stack_grbanp_final <- c(raster_stack_grbanp, GRBA_dist2lyr.r, GRBArocktemp.r)
 plot(raster_stack_grbanp_final)
 
 ### plotting tail end of raster stack 
