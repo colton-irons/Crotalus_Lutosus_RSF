@@ -13,10 +13,12 @@ plot(master_DEM)
 
 ## read in ruggedness layer provided by Tom Dilts
 rugged_grbanp.rast <- rast("/Users/coltonirons/Desktop/Large Files GitHub/vrml_mosaic.tif")
-summary(rugged_grbanp.rast)
+plot(rugged_grbanp.rast)
+
+
 
 ### read in AFG, BGR, TRE, SHR, LTR, and PFG
-grbanp_veg <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_VegRastLyr/grbanp_veg.tif")
+grbanp_veg <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/GRBA_NP_VegRastLyrs/grbanp_veg.tif")
 
 
 ### read in distance to water, roads, and hibernacula 
@@ -27,25 +29,6 @@ plot(water_grbanp.rast)
 hiber_grbanp.rast <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_DistRastLyrs/grbanp_den.tif")
 plot(hiber_grbanp.rast)
 
-# Crop and mask vegetation to the park boundary ----------------------
-
-grba_nps_rug_crs <- terra::project(
-  grba_nps.v,
-  terra::crs(rugged_grbanp.rast)
-)
-
-grbanp_rug <- rugged_grbanp.rast |>
-  terra::crop(grba_nps_rug_crs) |>
-  terra::mask(grba_nps_rug_crs)
-
-terra::plot(grbanp_dem)
-
-# Save cropped and masked vegetation raster as a GeoTIFF
-terra::writeRaster(
-  master.dem,
-  "grbanp_dem.tif",
-  overwrite = TRUE
-)
 
 # Calculate northeast-facing aspect ----------------------
 northeast_aspect <- cos(
@@ -70,10 +53,6 @@ terrain_grbanp <- terra::project(
   method = "cubicspline"
 )
 
-terrain_grbanp <- terra::mask(
-  terrain_grbanp,
-  grbanp_veg
-)
 
 northeast_aspect_grbanp <- terra::project(
   northeast_aspect,
