@@ -101,25 +101,25 @@ terra::compareGeom(
 
 # Calculate mean active-season land-surface temperature ----------------------
 
-GRBAmastertemp_lst.rast_1 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2010ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_1 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2010ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_1)
 GRBAmastertemp_lst.rast_1$mean <- GRBAmastertemp_lst.rast_1$climateEngine2010ActSeas.LST
-GRBAmastertemp_lst.rast_2 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2011ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_2 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2011ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_2)
 GRBAmastertemp_lst.rast_2$mean <- GRBAmastertemp_lst.rast_2$climateEngine2011ActSeas.LST
-GRBAmastertemp_lst.rast_3 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2012ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_3 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2012ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_3)
 GRBAmastertemp_lst.rast_3$mean <- GRBAmastertemp_lst.rast_3$climateEngine2012ActSeas.LST
-GRBAmastertemp_lst.rast_4 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2013ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_4 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2013ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_4)
 GRBAmastertemp_lst.rast_4$mean <- GRBAmastertemp_lst.rast_4$climateEngine2013ActSeas.LST
-GRBAmastertemp_lst.rast_5 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2014ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_5 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2014ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_5)
 GRBAmastertemp_lst.rast_5$mean <- GRBAmastertemp_lst.rast_5$climateEngine2014ActSeas.LST
-GRBAmastertemp_lst.rast_6 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2023ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_6 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2023ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_6)
 GRBAmastertemp_lst.rast_6$mean <- GRBAmastertemp_lst.rast_6$climateEngine2023ActSeas.LST
-GRBAmastertemp_lst.rast_7 <- rast("/Users/coltonirons/Desktop/TempRock_raster/LST_years/ClimateEngine2024ActSeas.LST.tif")
+GRBAmastertemp_lst.rast_7 <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/EasternNV_AvgLSTRastLyrs/ClimateEngine2024ActSeas.LST.tif")
 plot(GRBAmastertemp_lst.rast_7)
 GRBAmastertemp_lst.rast_7$mean <- GRBAmastertemp_lst.rast_7$climateEngine2024ActSeas.LST
 
@@ -198,11 +198,11 @@ n <- nlyr(raster_stack_grbanp_final)
 plot(raster_stack_grbanp_final[[ (n-5):n ]])
 
 ### reading in the full points for 25693 points
-combined_data25693 <- read_csv("~/Desktop/GRBA rattlesnake Proj/testing_trainingData/25707PApts/combined_data.csv")
+combined_data25693 <- read_csv("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/usedVSavailablepts_variables.csv")
 sum(is.na(combined_data25693))
 
 ## read in GRBA national park polygon as spatial feature
-grba_nps.sf <- st_read("/Users/coltonirons/Desktop/GRBA rattlesnake proj/grbanps.shp")
+grba_nps.sf <- st_read("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/Polygons_Points/grbanps.shp")
 
 n25000_background <- 25000   # set number of background points
 total_area_ha <- grba_nps.sf$area_ha
@@ -261,7 +261,7 @@ gratia::draw(park_model_no_gp)
 # Predict original study area with the no-GP model --------------
 
 
-SA_raster_stack <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/scripts/RSF_analysis/bake_mastercovarFINALFINAL.tif")
+SA_raster_stack <- rast("/Users/coltonirons/Desktop/GitHub/Crotalus_Lutosus_RSF/Data/SA_mastercovarRastLyr.tif")
 
 
 study_area_data <- terra::as.data.frame(
